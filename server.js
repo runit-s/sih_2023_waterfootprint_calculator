@@ -27,8 +27,12 @@ app.get('/api/:query', async(req, res)  =>  {
         const object = req.params.query;
         console.log(object);
         const result = await WaterContent.findOne({Object : object });
-        console.log(result.WaterContent);
-        res.status(200).json(result);
+        if (result) {
+            console.log(result.WaterContent);
+            res.status(200).json(result.WaterContent); 
+        } else {
+            res.status(404).json({ message: "Object not in Database" });
+        }
     }
     catch(error){
         res.status(500).json({error : error.message})
